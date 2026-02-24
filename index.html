@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Omooye School · walking the walk</title>
+    <!-- Favicon (school logo) -->
+    <link rel="icon" type="image/jpeg" href="images/image8.jpeg">
+    <!-- Font & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ---------- RESET & BASE ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            background: #f4fbf9;
+            color: #1a3c41;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        /* ---------- TYPOGRAPHY & UTILS ---------- */
+        h1, h2, h3 {
+            font-weight: 500;
+            letter-spacing: -0.02em;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2rem 2.5rem 4rem;
+        }
+
+        /* fade-up animation */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.8s cubic-bezier(0.15, 0.7, 0.3, 1), transform 0.8s cubic-bezier(0.15, 0.7, 0.3, 1);
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+
+        /* ---------- NAVIGATION (6 items) ---------- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 2.5rem;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid #cde3e0;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            flex-wrap: wrap;
+        }
+
+        .logo a {
+            font-weight: 600;
+            font-size: 1.7rem;
+            color: #0d373e;
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+        .logo span {
+            font-weight: 300;
+            font-style: italic;
+            color: #4d8188;
+            font-size: 1.2rem;
+            margin-left: 0.2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.8rem;
+            list-style: none;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            font-weight: 500;
+            color: #1a4a51;
+            font-size: 1rem;
+            padding: 0.3rem 0;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.2s, color 0.2s;
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            border-bottom-color: #2c7a81;
+            color: #0a3238;
+        }
+
+        /* mobile nav */
+        .menu-toggle {
+            display: none;
+            font-size: 1.8rem;
+            color: #1e5a62;
+            cursor: pointer;
+        }
+
+        /* ---------- SECTIONS ---------- */
+        section {
+            scroll-margin-top: 90px;
+        }
+
+        /* --- HOME (hero-less intro) --- */
+        .home-intro {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 3rem;
+            margin: 1rem 0 4rem;
+        }
+
+        .home-text {
+            flex: 2 1 360px;
+        }
+
+        .motto-large {
+            font-size: 1.3rem;
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            font-weight: 350;
+            color: #54858c;
+            margin-bottom: 1rem;
+        }
+
+        .home-text h1 {
+            font-size: 4rem;
+            font-weight: 550;
+            color: #10363c;
+            line-height: 1.1;
+            margin-bottom: 1.8rem;
+        }
+
+        .home-text h1 span {
+            font-weight: 250;
+            color: #537e85;
+            display: block;
+            font-size: 2.2rem;
+            margin-top: 0.5rem;
+        }
+
+        .home-description {
+            font-size: 1.2rem;
+            color: #29575f;
+            max-width: 600px;
+            margin-bottom: 2.2rem;
+            border-left: 4px solid #9ecfd6;
+            padding-left: 1.8rem;
+        }
+
+        .home-callout {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        .chip {
+            background: #e1f2ef;
+            border-radius: 60px;
+            padding: 0.5rem 1.5rem;
+            font-weight: 500;
+            color: #1f5f68;
+            box-shadow: 0 2px 6px #bcd9d6;
+        }
+
+        /* Styled logo in hero section */
+        .home-accent {
+            flex: 1 1 200px;
+            min-height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .school-logo {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid white;
+            box-shadow: 0 20px 30px -10px rgba(47, 91, 94, 0.3);
+            transition: transform 0.3s ease;
+            background: #ddf0ed;
+        }
+
+        .school-logo:hover {
+            transform: scale(1.02) rotate(2deg);
+        }
+
+        /* --- ABOUT (extended) --- */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin: 2.5rem 0;
+        }
+
+        .about-card {
+            background: white;
+            padding: 2.2rem;
+            border-radius: 2rem;
+            box-shadow: 0 12px 32px -18px #1f5f6830;
+            border: 1px solid #d5eeea;
+        }
+
+        .about-card h2 {
+            font-size: 2rem;
+            font-weight: 500;
+            color: #1d525a;
+            margin-bottom: 1.2rem;
+        }
+        .about-card h2 i {
+            margin-right: 0.8rem;
+            color: #579ca7;
+        }
+
+        .about-card p {
+            font-size: 1.1rem;
+            color: #2b5b62;
+            margin-bottom: 1.4rem;
+        }
+
+        .values-list {
+            list-style: none;
+        }
+        .values-list li {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+            align-items: center;
+        }
+        .values-list i {
+            width: 2rem;
+            color: #47838b;
+            font-size: 1.3rem;
+        }
+
+        /* --- TEACHERS (flexible grid for future expansion) --- */
+        .teachers-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* Start with 2 columns for 2 teachers */
+            gap: 2rem;
+            margin: 3rem 0;
+            justify-content: center;
+        }
+
+        /* For future when more teachers are added, they will auto-adjust */
+        @media screen and (min-width: 881px) {
+            .teachers-grid:has(.teacher-card:nth-child(3)) {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .teachers-grid:has(.teacher-card:nth-child(4)) {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .teacher-card {
+            background: white;
+            border-radius: 2.2rem;
+            padding: 2rem 1.5rem 1.8rem;
+            box-shadow: 0 20px 36px -20px #1b5d66;
+            transition: transform 0.2s, box-shadow 0.3s;
+            border: 1px solid #d1eeea;
+            text-align: center;
+        }
+
+        .teacher-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 30px 44px -20px #0a4f59;
+        }
+
+        .teacher-avatar {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            margin: 0 auto 1.2rem;
+            overflow: hidden;
+            border: 4px solid white;
+            box-shadow: 0 8px 16px #b0dad5;
+            background: #d2ede8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .teacher-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .teacher-avatar i {
+            font-size: 3.8rem;
+            color: #29656e;
+        }
+
+        .teacher-card h3 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #164c54;
+            margin-bottom: 0.25rem;
+        }
+
+        .teacher-title {
+            display: inline-block;
+            background: #def3f0;
+            padding: 0.3rem 1.5rem;
+            border-radius: 60px;
+            font-weight: 500;
+            color: #1b6872;
+            margin: 0.8rem 0 1rem;
+            font-size: 0.95rem;
+            letter-spacing: 0.3px;
+        }
+
+        .teacher-bio {
+            color: #2b6169;
+            margin: 1rem 0 1.2rem;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .teacher-meta {
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+            font-size: 1.3rem;
+            color: #36838d;
+            margin-top: 0.8rem;
+        }
+        .teacher-meta i {
+            transition: transform 0.15s, color 0.15s;
+            cursor: default;
+        }
+        .teacher-meta i:hover {
+            color: #1b555e;
+            transform: scale(1.15);
+        }
+
+        /* --- GALLERY CAROUSEL (images of students & activities) --- */
+        .carousel-container {
+            position: relative;
+            max-width: 900px;
+            margin: 2.5rem auto;
+            border-radius: 2.5rem;
+            overflow: hidden;
+            box-shadow: 0 30px 40px -25px #0b4a54;
+            border: 2px solid #d0f0ec;
+        }
+
+        .carousel-slides {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            display: block;
+            background: #c9e3df;
+        }
+
+        .slide-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 50, 50, 0.8));
+            color: white;
+            padding: 2rem 1.5rem 1.5rem;
+            font-size: 1.3rem;
+            font-weight: 400;
+            text-shadow: 0 2px 5px #02262b;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .slide-caption i {
+            font-size: 1.8rem;
+            color: #d4f3f0;
+        }
+
+        /* carousel nav buttons */
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(4px);
+            border: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 60px;
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #11565f;
+            transition: background 0.2s;
+            z-index: 10;
+            border: 1px solid white;
+        }
+        .carousel-btn:hover {
+            background: white;
+            color: #06363e;
+        }
+        .prev {
+            left: 20px;
+        }
+        .next {
+            right: 20px;
+        }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            padding: 1.2rem 0 2rem;
+        }
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 20px;
+            background: #b9dfda;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .dot.active {
+            background: #226d78;
+            width: 28px;
+        }
+
+        /* --- CONTACT (with WhatsApp button and form) --- */
+        .contact-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3rem;
+            margin: 3rem 0;
+        }
+
+        .contact-info {
+            flex: 1 1 260px;
+            background: #e2f5f1;
+            border-radius: 2rem;
+            padding: 2rem;
+        }
+
+        .contact-info h2 {
+            font-size: 2rem;
+            font-weight: 500;
+            color: #0c444d;
+            margin-bottom: 2rem;
+        }
+
+        .info-item {
+            display: flex;
+            gap: 1.2rem;
+            margin-bottom: 1.8rem;
+            align-items: center;
+        }
+        .info-item i {
+            font-size: 1.8rem;
+            width: 2.4rem;
+            color: #317a84;
+        }
+
+        .whatsapp-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: #25D366;
+            color: white;
+            font-weight: 600;
+            padding: 0.9rem 1.8rem;
+            border-radius: 60px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            margin: 1.5rem 0 0.5rem;
+            border: 2px solid #20b859;
+            transition: background 0.2s, transform 0.1s;
+            width: fit-content;
+        }
+        .whatsapp-button i {
+            font-size: 1.6rem;
+            width: auto;
+        }
+        .whatsapp-button:hover {
+            background: #20b859;
+            transform: scale(1.02);
+        }
+
+        .contact-form {
+            flex: 2 1 400px;
+            background: white;
+            border-radius: 2.2rem;
+            padding: 2.2rem;
+            box-shadow: 0 12px 30px -14px #215e66;
+        }
+
+        .form-group {
+            margin-bottom: 1.4rem;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            border: 1px solid #cde3e0;
+            border-radius: 2rem;
+            font-family: "Inter", sans-serif;
+            font-size: 1rem;
+            background: #f6fdfb;
+        }
+
+        button {
+            background: #266e78;
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 3rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        button:hover {
+            background: #1a5760;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2.5rem 1rem 1.5rem;
+            color: #4e7e85;
+            border-top: 1px solid #cde0dd;
+            margin-top: 2rem;
+        }
+
+        /* ---------- RESPONSIVE ---------- */
+        @media screen and (max-width: 1000px) {
+            .nav-links { gap: 1rem; }
+        }
+
+        @media screen and (max-width: 880px) {
+            .teachers-grid { 
+                grid-template-columns: repeat(2, 1fr); 
+            }
+            .about-grid { grid-template-columns: 1fr; }
+        }
+
+        @media screen and (max-width: 700px) {
+            nav { padding: 1rem 1.5rem; }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                gap: 1rem;
+                padding: 1.5rem 0 1rem;
+                background: white;
+            }
+            .nav-links.show { display: flex; }
+            .menu-toggle { display: block; }
+            .teachers-grid { 
+                grid-template-columns: 1fr; 
+                max-width: 400px; 
+                margin: 0 auto; 
+            }
+            .home-text h1 { font-size: 3rem; }
+            .school-logo { width: 180px; height: 180px; }
+            .carousel-slide img { height: 350px; }
+        }
+
+        @media screen and (max-width: 450px) {
+            .container { padding: 1.5rem 1.2rem; }
+        }
+
+        .active { border-bottom-color: #2c7a81; }
+    </style>
+</head>
+<body>
+    <!-- NAVIGATION (Home, About, E-Portal, Teachers, Gallery, Contact) -->
+    <nav>
+        <div class="logo"><a href="#home">Omooye<span>.</span></a></div>
+        <div class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#home" class="nav-link active">Home</a></li>
+            <li><a href="#about" class="nav-link">About</a></li>
+            <li><a href="https://edstream.com.ng/accounts/login/" class="nav-link">E-Portal</a></li>
+            <li><a href="#teachers" class="nav-link">Teachers</a></li>
+            <li><a href="#gallery" class="nav-link">Gallery</a></li>
+            <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <!-- HOME SECTION -->
+        <section id="home" class="container" style="scroll-margin-top: 80px;">
+            <div class="home-intro fade-up visible">
+                <div class="home-text">
+                    <div class="motto-large">walking the walk</div>
+                    <h1>Omooye <span>school of action & integrity</span></h1>
+                    <div class="home-description">
+                        A place where values aren't just spoken — they're lived. Since 1999, we've built a community around purposeful learning, small classes, and real-world connection.
+                    </div>
+                    <div class="home-callout">
+                        <span class="chip"><i class="fas fa-tree"></i> 2 campuses</span>
+                        <span class="chip"><i class="fas fa-hand-sparkles"></i> ethos in action</span>
+                    </div>
+                </div>
+                <div class="home-accent">
+                    <img src="images/image8.jpeg" alt="Omooye School Logo" class="school-logo">
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT SECTION -->
+        <section id="about" class="container" style="scroll-margin-top: 80px;">
+            <div class="about-grid">
+                <div class="about-card fade-up delay-1">
+                    <h2><i class="fas fa-compass"></i> Our story</h2>
+                    <p>Omooye was founded by educators who believed that character is built through action, not just words. "Walking the walk" means every student engages in community projects, outdoor leadership, and collaborative problem-solving.</p>
+                    <p>We remain intentionally small — 96 students across 6 grades — so that each voice is heard and each path is guided.</p>
+                </div>
+                <div class="about-card fade-up delay-2">
+                    <h2><i class="fas fa-heart"></i> Core values</h2>
+                    <ul class="values-list">
+                        <li><i class="fas fa-leaf"></i> <span>Authenticity – be real, be present</span></li>
+                        <li><i class="fas fa-handshake"></i> <span>Service – learn by doing good</span></li>
+                        <li><i class="fas fa-brain"></i> <span>Curiosity – question everything</span></li>
+                        <li><i class="fas fa-people-group"></i> <span>Community – walk together</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="fade-up delay-3" style="background: #e0f2ee; border-radius: 3rem; padding: 2rem; margin-top: 2rem;">
+                <p style="font-size: 1.2rem; font-weight: 300; color: #154248;">"We don't just teach subjects — we teach how to turn thought into meaningful action. That's the Omooye difference." — Mr S.J Ogunremi, Principal</p>
+            </div>
+        </section>
+
+        <!-- TEACHERS SECTION (two teachers, flexible for future expansion) -->
+        <section id="teachers" class="container" style="scroll-margin-top: 80px;">
+            <h2 style="font-size: 2.6rem; font-weight: 450; color: #13454d; margin-bottom: 0.5rem;">Educators who walk with you</h2>
+            <div style="width: 80px; height: 3px; background: #9ed0d6; margin-bottom: 2.5rem;"></div>
+            <div class="teachers-grid">
+                <!-- Teacher 1 - Mr S.J Ogunremi -->
+                <div class="teacher-card fade-up delay-1">
+                    <div class="teacher-avatar">
+                        <img src="images/mr-ogunremi.jpg" alt="Mr S.J Ogunremi" onerror="this.src='https://ui-avatars.com/api/?name=Mr+SJ+Ogunremi&size=140&length=2&background=2c7a81&color=fff&bold=true&rounded=true'">
+                    </div>
+                    <h3>Mr S.J Ogunremi</h3>
+                    <div class="teacher-title">Principal · Humanities</div>
+                    <p class="teacher-bio">Mr S.J Ogunremi guides students through philosophy, literature, and community action. Over 15 years of educational leadership.</p>
+                    <div class="teacher-meta"><i class="fas fa-envelope"></i><i class="fas fa-comment"></i><i class="fas fa-calendar"></i></div>
+                </div>
+                
+                <!-- Teacher 2 - Mrs Olagoke Iyabo -->
+                <div class="teacher-card fade-up delay-2">
+                    <div class="teacher-avatar">
+                        <img src="images/mrs-olagoke-iyabo.jpg" alt="Mrs Olagoke Iyabo" onerror="this.src='https://ui-avatars.com/api/?name=Mrs+Olagoke+Iyabo&size=140&length=2&background=42858c&color=fff&bold=true&rounded=true'">
+                    </div>
+                    <h3>Mrs Olagoke Iyabo</h3>
+                    <div class="teacher-title">School Bursar · Finance</div>
+                    <p class="teacher-bio">Manages school finances with transparency and care. Believes in responsible stewardship and supporting educational excellence.</p>
+                    <div class="teacher-meta"><i class="fas fa-envelope"></i><i class="fas fa-comment"></i><i class="fas fa-calculator"></i></div>
+                </div>
+                
+                <!-- Additional teachers can be added here in the future -->
+            </div>
+            <!-- Note: The grid will automatically adjust when more teacher cards are added -->
+        </section>
+
+        <!-- GALLERY CAROUSEL (images of students & activities) -->
+        <section id="gallery" class="container" style="scroll-margin-top: 80px;">
+            <h2 style="font-size: 2.6rem; font-weight: 450; color: #13454d; margin-bottom: 0.5rem;">Moments of action</h2>
+            <div style="width: 80px; height: 3px; background: #9ed0d6; margin-bottom: 1.5rem;"></div>
+            
+            <div class="carousel-container fade-up">
+                <div class="carousel-slides" id="carouselSlides">
+                    <!-- slide 1 - Campus 1 -->
+                    <div class="carousel-slide">
+                        <img src="images/image1.jpg" alt="Students gardening" onerror="this.src='https://placehold.co/800x500/9ac5c5/white?text=Campus+1'">
+                        <div class="slide-caption"><i class="fas fa-leaf"></i> Campus 1</div>
+                    </div>
+                    <!-- slide 2 -->
+                    <div class="carousel-slide">
+                        <img src="images/image6.jpg" alt="Forest walk" onerror="this.src='https://placehold.co/800x500/7fb7b0/white?text=Forest+Walk'">
+                        <div class="slide-caption"><i class="fas fa-tree"></i> Nature Trail</div>
+                    </div>
+                    <!-- slide 3 -->
+                    <div class="carousel-slide">
+                        <img src="images/image3.jpg" alt="Community outreach" onerror="this.src='https://placehold.co/800x500/8fc5c0/white?text=Community'">
+                        <div class="slide-caption"><i class="fas fa-hand-holding-heart"></i> Our community</div>
+                    </div>
+                    <!-- slide 4 -->
+                    <div class="carousel-slide">
+                        <img src="images/image4.jpg" alt="ICT Center" onerror="this.src='https://placehold.co/800x500/a6d2cf/white?text=ICT+Center'">
+                        <div class="slide-caption"><i class="fas fa-drum"></i> ICT Center</div>
+                    </div>
+                    <!-- slide 5 -->
+                    <div class="carousel-slide">
+                        <img src="images/image5.jpg" alt="Mural painting" onerror="this.src='https://placehold.co/800x500/85bcbc/white?text=Arts+Studio'">
+                        <div class="slide-caption"><i class="fas fa-paint-brush"></i> Collaboration Mutual</div>
+                    </div>
+                    <!-- slide 6 -->
+                    <div class="carousel-slide">
+                        <img src="images/image7.jpg" alt="Outdoor camp" onerror="this.src='https://placehold.co/800x500/7bb2ad/white?text=Leadership+Camp'">
+                        <div class="slide-caption"><i class="fas fa-campground"></i> Leadership Camp</div>
+                    </div>
+                </div>
+
+                <button class="carousel-btn prev" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+                <button class="carousel-btn next" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+
+                <div class="carousel-dots" id="carouselDots">
+                    <span class="dot active"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT SECTION with WhatsApp button and WhatsApp form -->
+        <section id="contact" class="container" style="scroll-margin-top: 80px;">
+            <div class="contact-container">
+                <div class="contact-info fade-up">
+                    <h2>Reach out</h2>
+                    <div class="info-item"><i class="fas fa-map-pin"></i> 14 Omooye Lane</div>
+                    <div class="info-item"><i class="fas fa-phone"></i> +2348033189346</div>
+                    <div class="info-item"><i class="fas fa-envelope"></i> omooye@gmail.com</div>
+                    <div class="info-item"><i class="fas fa-clock"></i> Mon–Fri 8:30–3:30</div>
+                    <a href="https://wa.me/2348033189346?text=Hello%20Omooye%20School%2C%20I'd%20like%20to%20know%20more%20about%20walking%20the%20walk." class="whatsapp-button" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp us</a>
+                    <p style="font-size: 0.9rem; margin-top: 0.6rem;">Typically replies within an hour</p>
+                </div>
+                <div class="contact-form fade-up delay-2">
+                    <h2 style="font-size: 1.8rem; font-weight: 500; margin-bottom: 1.5rem;">send a message</h2>
+                    <form id="whatsappForm">
+                        <div class="form-group">
+                            <input type="text" id="name" placeholder="your name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" placeholder="email address" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="message" rows="4" placeholder="how can we help?" required></textarea>
+                        </div>
+                        <button type="submit"><i class="fab fa-whatsapp"></i> Send via WhatsApp</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>Omooye school · established 1999 · walking the walk</p>
+            <p style="margin-top: 1rem; font-size: 0.9rem;">© 2026 Omooye. All actions speak louder.</p>
+        </footer>
+    </main>
+
+    <script>
+        (function() {
+            // Fade-up observer
+            const faders = document.querySelectorAll('.fade-up');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15 });
+            faders.forEach(el => observer.observe(el));
+
+            // Mobile menu
+            const toggle = document.getElementById('menuToggle');
+            const navLinks = document.getElementById('navLinks');
+            if (toggle) {
+                toggle.addEventListener('click', () => navLinks.classList.toggle('show'));
+            }
+
+            // Active link highlight (skip external links)
+            const sections = document.querySelectorAll('section[id]');
+            const navItems = document.querySelectorAll('.nav-link:not([href*="//"])');
+            
+            function setActiveLink() {
+                let scrollY = window.scrollY + 150;
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.offsetHeight;
+                    const sectionId = section.getAttribute('id');
+                    if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+                        navItems.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === '#' + sectionId) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }
+            window.addEventListener('scroll', setActiveLink);
+            window.addEventListener('load', setActiveLink);
+
+            // Smooth scroll for internal links only
+            navItems.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetEl = document.querySelector(targetId);
+                    if (targetEl) {
+                        targetEl.scrollIntoView({ behavior: 'smooth' });
+                        if (navLinks.classList.contains('show')) navLinks.classList.remove('show');
+                        navItems.forEach(l => l.classList.remove('active'));
+                        this.classList.add('active');
+                        history.pushState(null, null, targetId);
+                    }
+                });
+            });
+
+            // WhatsApp form submission
+            const whatsappForm = document.getElementById('whatsappForm');
+            if (whatsappForm) {
+                whatsappForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Get form values
+                    const name = document.getElementById('name').value;
+                    const email = document.getElementById('email').value;
+                    const message = document.getElementById('message').value;
+                    
+                    // Format WhatsApp message
+                    const whatsappMessage = `Hello Omooye School,%0A%0A*Name:* ${name}%0A*Email:* ${email}%0A*Message:* ${message}`;
+                    
+                    // WhatsApp number (without +)
+                    const phoneNumber = '2348033189346';
+                    
+                    // Create WhatsApp URL
+                    const whatsappURL = `https://wa.me/${phoneNumber}?text=${whatsappMessage}`;
+                    
+                    // Open WhatsApp in new tab
+                    window.open(whatsappURL, '_blank');
+                });
+            }
+
+            // Carousel logic
+            const slides = document.querySelectorAll('.carousel-slide');
+            const slidesContainer = document.getElementById('carouselSlides');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const dots = document.querySelectorAll('.dot');
+            let currentIndex = 0;
+            const totalSlides = slides.length;
+
+            function updateCarousel() {
+                slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+                dots.forEach((dot, idx) => {
+                    dot.classList.toggle('active', idx === currentIndex);
+                });
+            }
+
+            if (nextBtn && prevBtn) {
+                nextBtn.addEventListener('click', () => {
+                    currentIndex = (currentIndex + 1) % totalSlides;
+                    updateCarousel();
+                });
+
+                prevBtn.addEventListener('click', () => {
+                    currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+                    updateCarousel();
+                });
+
+                dots.forEach((dot, idx) => {
+                    dot.addEventListener('click', () => {
+                        currentIndex = idx;
+                        updateCarousel();
+                    });
+                });
+            }
+
+            // Auto-play
+            let autoPlay = setInterval(() => {
+                if (totalSlides > 0) {
+                    currentIndex = (currentIndex + 1) % totalSlides;
+                    updateCarousel();
+                }
+            }, 5000);
+
+            const carousel = document.querySelector('.carousel-container');
+            if (carousel) {
+                carousel.addEventListener('mouseenter', () => clearInterval(autoPlay));
+                carousel.addEventListener('mouseleave', () => {
+                    autoPlay = setInterval(() => {
+                        currentIndex = (currentIndex + 1) % totalSlides;
+                        updateCarousel();
+                    }, 5000);
+                });
+            }
+
+            // initial
+            if (totalSlides > 0) updateCarousel();
+        })();
+    </script>
+</body>
+</html>
